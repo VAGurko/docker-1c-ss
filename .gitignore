@@ -1,0 +1,6 @@
+.env
+*.bak
+/data/
+/conf/
+/temp/
+/Dockerfiles/docker-1c-postgres/.env

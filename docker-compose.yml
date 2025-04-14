@@ -1,0 +1,43 @@
+services:
+  1c-ss:
+    image: vagurko/docker-1c-ss:8.3.25-1394
+    container_name: 1c-ss
+    restart: unless-stopped
+    ports:
+      - 8314:8314
+      - 1540-1541:1540-1541
+      - 1560-1591:1560-1591
+    volumes:
+      - ./data/usr1cv8:/home/usr1cv8
+      - ./conf:/opt/1cv8/conf
+    links:
+      - 1c-postgrespro
+    networks:
+      - 1c-ss_network
+
+  1c-postgrespro:
+    image: vagurko/docker-1c-postgrespro:1C-16
+    container_name: 1c-postgrespro
+    restart: unless-stopped
+    environment:
+      - DEBUG=false
+      - PG_TRUST_LOCALNET=true
+      - POSTGRES_PASSWORD=supersecurepwd
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/pg_data:/opt/pgpro/data
+      # Каталог преднастроеной конфигурации postgresql.conf
+      - ./Dockerfiles/docker-1c-postgres/conf_example:/opt/pgpro/init/
+      - ./data/pg_1c:/opt/pgpro/1C/
+      - ./data/pg_1c_data:/opt/pgpro/1C/data
+      - ./data/pg_1c_index:/opt/pgpro/1C/index
+    ports:
+      - 5432:5432
+    networks:
+      - 1c-ss_network
+
+networks:
+  1c-ss_network:
+    name: 1c-ss_network
+    driver: bridge
+
