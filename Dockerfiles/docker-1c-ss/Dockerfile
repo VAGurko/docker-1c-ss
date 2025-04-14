@@ -33,13 +33,13 @@ ENV PLATFORM=8.3.25
 ENV RELEASE=1394
 RUN groupadd \
       --system \
-      --gid 2000 \
+      --gid 999 \
       grp1cv8 && \
     useradd \
       --system \
       --comment "1C system user" \
       -g grp1cv8 \
-      --uid 2000 \
+      --uid 999 \
       --shell /sbin/nologin \
       --home-dir /home/usr1cv8/ \
       usr1cv8 && \
