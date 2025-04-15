@@ -1,4 +1,7 @@
 #!/bin/bash
+ARH=x86_64
+PLATFORM=8.3.25
+RELEASE=1394
 
 if [[ ! -d /home/usr1cv8/.1cv8 ]]; then
   exec mkdir --parent "/home/usr1cv8/.1cv8" && \
@@ -8,10 +11,10 @@ if [[ ! -d /home/usr1cv8/.1cv8 ]]; then
 fi
 
 if [[ "$1" = "ibsrv" && -f /opt/1cv8/conf/config.yml ]]; then
-  exec gosu usr1cv8 /opt/1cv8/x86_64/8.3.25.1394/ibsrv --config=/opt/1cv8/conf/config.yml
+  exec gosu usr1cv8 /opt/1cv8/${ARH}/${PLATFORM}.${RELEASE}/ibsrv --config=/opt/1cv8/conf/config.yml
   else
     if [ "$1" = "ibsrv" ]; then
-      exec gosu usr1cv8 /opt/1cv8/x86_64/8.3.25.1394/ibsrv
+      exec gosu usr1cv8 /opt/1cv8/${ARH}/${PLATFORM}.${RELEASE}/ibsrv
     fi
 fi
 
