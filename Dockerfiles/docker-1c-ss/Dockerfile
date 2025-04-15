@@ -6,7 +6,7 @@ ENV GOSU_VERSION 1.17
 ENV TTF_PACKAGE ttf-mscorefonts-installer_3.8.1_all.deb
 RUN apt-get -qq update \
   && apt-get -qq upgrade --yes \
-  && apt-get -qq install --yes --no-install-recommends ca-certificates wget locales \
+  && apt-get -qq install --yes --no-install-recommends ca-certificates wget locales apt-utils \
   && `#----- Install the dependencies -----` \
   && apt-get -qq install --yes --no-install-recommends fontconfig imagemagick libfreetype6 libgsf-1-common libgssapi-krb5-2 unixodbc \
   && `#----- Deal with ttf-mscorefonts-installer -----` \
