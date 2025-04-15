@@ -29,29 +29,30 @@ ENV LANG ru_RU.utf8
 #RUN apt-get -qq install --yes --no-install-recommends libfreetype6 libgsf-1-common unixodbc glib2.0
 
 ADD deb/*.deb /tmp/
+ENV ARH=x86_64
 ENV PLATFORM=8.3.25
 ENV RELEASE=1394
 RUN groupadd \
       --system \
-      --gid 999 \
+      --gid 2000 \
       grp1cv8 && \
     useradd \
       --system \
       --comment "1C system user" \
       -g grp1cv8 \
-      --uid 999 \
+      --uid 2000 \
       --shell /sbin/nologin \
       --home-dir /home/usr1cv8/ \
       usr1cv8 && \
     mkdir --parents /var/log/1C /home/usr1cv8/.1cv8/1C/1cv8/conf && \
     chown --recursive usr1cv8:grp1cv8 /var/log/1C /home/usr1cv8 && \
-    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-common_${PLATFORM}-${RELEASE}_*.deb 2> /dev/null && \
-    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-server_${PLATFORM}-${RELEASE}_*.deb 2> /dev/null && \
-    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-ws_${PLATFORM}-${RELEASE}_*.deb 2> /dev/null && \
-    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-crs_${PLATFORM}-${RELEASE}_*.deb 2> /dev/null && \
+    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-common_${PLATFORM}-${RELEASE}_${ARH}.deb 2> /dev/null && \
+    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-server_${PLATFORM}-${RELEASE}_${ARH}.deb 2> /dev/null && \
+    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-ws_${PLATFORM}-${RELEASE}_${ARH}.deb 2> /dev/null && \
+    dpkg --install /tmp/1c-enterprise-${PLATFORM}.${RELEASE}-crs_${PLATFORM}-${RELEASE}_${ARH}.deb 2> /dev/null && \
     rm /tmp/*.deb && \
-    ln -s /opt/1cv8/x86_64/${PLATFORM}.${RELEASE}/ibcmd /usr/bin/ibcmd && \
-    ln -s /opt/1cv8/x86_64/${PLATFORM}.${RELEASE}/ibsrv /usr/bin/ibsrv
+    ln -s /opt/1cv8/${ARH}/${PLATFORM}.${RELEASE}/ibcmd /usr/bin/ibcmd && \
+    ln -s /opt/1cv8/${ARH}/${PLATFORM}.${RELEASE}/ibsrv /usr/bin/ibsrv
 
 COPY container/docker-entrypoint.sh /
 
