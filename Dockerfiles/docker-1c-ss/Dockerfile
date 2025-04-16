@@ -34,13 +34,13 @@ ENV PLATFORM=8.3.25
 ENV RELEASE=1394
 RUN groupadd \
       --system \
-      --gid 2000 \
+      --gid 999 \
       grp1cv8 && \
     useradd \
       --system \
       --comment "1C system user" \
       -g grp1cv8 \
-      --uid 2000 \
+      --uid 999 \
       --shell /sbin/nologin \
       --home-dir /home/usr1cv8/ \
       usr1cv8 && \
@@ -57,6 +57,12 @@ RUN groupadd \
 COPY container/docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+RUN chown -cR 999:999 /opt/1cv8 \
+    && chown -cR 999:999 /home/usr1cv8 \
+    && chown -cR 999:999 /var/log/1C \
+    && chown -cR 999:999 /docker-entrypoint.sh \
+    && chmod +x /docker-entrypoint.sh
 
 VOLUME /home/usr1cv8
 VOLUME /opt/1cv8/conf
